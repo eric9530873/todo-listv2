@@ -35,6 +35,14 @@ app.get('/', (req, res) => {
         .catch(error => console.log(error))
 })
 
+app.get('/todos/new', (req, res) => {
+    res.render('new')
+})
+
+app.post('/todos', (req, res) => {
+    const name = req.body.name
+})
+
 app.listen(3000, () => {
     console.log(`App is running on http://localhost:3000`)
 })
