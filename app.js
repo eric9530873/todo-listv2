@@ -1,10 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
-
 const exhbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 
 const Todo = require('./models/todo')
-const todo = require('./models/todo')
 
 // 加入這段 code, 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -26,6 +25,7 @@ db.once('open', () => {
 app.engine('hbs', exhbs.engine({ defaultLayout: 'main', extname: 'hbs' }))
 
 app.set('view engine', 'hbs')
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
     //拿到全部todo
@@ -41,6 +41,49 @@ app.get('/todos/new', (req, res) => {
 
 app.post('/todos', (req, res) => {
     const name = req.body.name
+
+    // Todo.create({ name })
+    //     .then(() => res.redirect('/'))
+    //     .catch(error => console.log(error))
+
+    const todo = new Todo({ name })
+    return todo.save()
+        .then(() => res.redirect('/'))
+        .catch((error) => console.log(error))
+})
+
+app.get('/todos/:id', (req, res) => {
+    const id = req.params.id
+    Todo.findById(id)
+        .lean()
+        .then(todo => res.render('detail', { todo }))
+})
+
+app.get('/todos/:id/edit', (req, res) => {
+    const id = req.params.id
+    Todo.findById(id)
+        .lean()
+        .then(todo => res.render('edit', { todo }))
+})
+
+app.post('/todos/:id/edit', (req, res) => {
+    const id = req.params.id
+    const name = req.body.name
+    Todo.findById(id)
+        .then(todo => {
+            todo.name = name
+            return todo.save()
+        })
+        .then(() => res.redirect(`/todos/${id}`))
+        .catch(error => console.log(error))
+})
+
+app.post('/todos/:id/delete', (req, res) => {
+    const id = req.params.id
+    Todo.findById(id)
+        .then(todo => todo.remove())
+        .then(() => res.redirect('/'))
+        .catch(error => console.log(error))
 })
 
 app.listen(3000, () => {
