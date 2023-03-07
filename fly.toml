@@ -6,7 +6,7 @@ kill_timeout = 5
 processes = []
 
 [env]
-MONGODB_URI = mongodb+srv://eric9530873:a9530873@cluster0.pvo5poz.mongodb.net/todo-list?retryWrites=true&w=majority
+
 
 [experimental]
   auto_rollback = true
