@@ -10,7 +10,7 @@ const todoSchema = new Schema({
         type: Boolean,
         default: false
     },
-    
+
 })
 
 module.exports = mongoose.model('Todo', todoSchema)

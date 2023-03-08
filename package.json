@@ -19,5 +19,14 @@
     "method-override": "^3.0.0",
     "mongoose": "^5.9.7"
   },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eric9530873/todo-listv2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eric9530873/todo-listv2/issues"
+  },
+  "homepage": "https://github.com/eric9530873/todo-listv2#readme",
   "description": ""
 }
