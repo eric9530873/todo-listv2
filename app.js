@@ -4,13 +4,14 @@ const exhbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
-
+require('./config/mongoose')
 
 
 const routes = require('./routes')
 const app = express()
+const PORT = process.env.PORT || 3000
 
-require('./config/mongoose')
+
 
 
 app.engine('hbs', exhbs.engine({ defaultLayout: 'main', extname: 'hbs' }))
@@ -25,5 +26,5 @@ app.use(routes)
 
 
 app.listen(3000, () => {
-    console.log(`App is running on http://localhost:3000`)
+    console.log(`App is running on http://localhost:${PORT}`)
 })
